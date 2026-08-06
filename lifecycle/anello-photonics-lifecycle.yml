@@ -1,0 +1,67 @@
+generated: '2026-08-06'
+method: searched
+source: https://docs-a1.readthedocs.io/en/latest/version.html
+also_source:
+- https://docs-a1.readthedocs.io/en/latest/fw_upgrade.html
+- https://docs-a1.readthedocs.io/en/latest/known_limitations.html
+versioning:
+  scheme: firmware-and-document
+  api_version_field: none
+  note: >-
+    The wire protocol carries no version field. Behaviour is gated on device
+    firmware version, and the developer manual is separately revision-controlled
+    per product with an ANELLO document number.
+  documentation_channels:
+  - {product: 'EVK / A-1', url: 'https://docs-a1.readthedocs.io/en/latest/'}
+  - {product: Ground INS and Ground IMU, url: 'https://docs-a1.readthedocs.io/en/ground_ins_and_imu/'}
+  - {product: Maritime INS, url: 'https://docs-a1.readthedocs.io/en/maritime_ins/'}
+  - {product: Aerial INS, url: 'https://docs-a1.readthedocs.io/en/aerial_ins/'}
+  - {product: X3, url: 'https://docs-a1.readthedocs.io/en/x3/'}
+firmware_gated_behaviour:
+- behaviour: APIMU T_Sync field
+  available_from: v1.0.39
+  note: Firmware before v1.0.39 does not have the T_Sync field.
+- behaviour: NMEA output on the configuration port
+  available_from: v1.2
+- behaviour: ANELLO ROS driver support (EVK, Ground INS, Ground IMU)
+  available_from: v1.1.1
+firmware_upgrade:
+  docs: https://docs-a1.readthedocs.io/en/latest/fw_upgrade.html
+  maritime_ins:
+    transport: MAVLink
+    tool: https://github.com/Anello-Photonics/ANELLO_INS_Scripts
+    entrypoint: 'python anello_fw_uploader.py --port <connection>'
+    docs: https://docs-a1.readthedocs.io/en/maritime_ins/fw_upgrade.html
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: >-
+    No API deprecation policy, sunset window or removal schedule is published.
+    The only documented deprecations are product renames and a tooling move,
+    recorded below; they are naming changes, not interface removals, so no
+    `Deprecation` pointer is emitted.
+  renames:
+  - {from: ANELLO GNSS INS, to: ANELLO GROUND INS, dated: '2026-01-16'}
+  - {from: ANELLO GNSS INS/ATAK KIT, to: ANELLO GROUND INS/ATAK KIT, dated: '2026-01-16'}
+  - {from: ANELLO IMU+, to: ANELLO GROUND IMU, dated: '2026-01-16'}
+  tooling_moves:
+  - change: >-
+      ntrip_client moved out of ~/catkin_ws/src into the anello_ros_driver
+      package src/script directories; upgrading from ROS driver <= v1.2.2
+      requires deleting the old checkout and rebuilding.
+    source: https://github.com/Anello-Photonics/ANELLO_ROS_Driver
+status_page: null
+status_page_note: >-
+  No status page found. status.anellophotonics.com does not resolve; no status
+  link appears on the site, in llms.txt, or in the developer manual. No
+  `StatusPage` pointer is emitted.
+sla:
+  url: null
+  note: No published SLA or uptime target — ANELLO ships hardware, not a hosted service.
+support:
+  contact_page: https://www.anellophotonics.com/contact
+  general_email: info@anellophotonics.com
+  support_email: support@anellophotonics.com
+known_issues:
+  url: https://docs-a1.readthedocs.io/en/latest/known_limitations.html
+document_revisions: changelog/anello-photonics-changelog.yml

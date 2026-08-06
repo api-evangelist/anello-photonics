@@ -1,0 +1,72 @@
+generated: '2026-08-06'
+method: searched
+source: https://docs-a1.readthedocs.io/en/latest/version.html
+scheme: semver-per-document
+note: >-
+  ANELLO publishes no product or API changelog. What it does publish is a
+  revision-control table for the developer manual itself — one row per product
+  manual, with an ANELLO document number, a version and a dated change note.
+  That table is the only dated change record on the developer surface and is
+  transcribed verbatim below. Repository activity is listed separately as
+  corroborating, undated signal.
+current:
+  documents:
+  - {doc_number: '93001201', document: 'User Manual, Ground INS', version: 1.0.1}
+  - {doc_number: '93001301', document: 'User Manual, Ground IMU', version: 1.0.1}
+  - {doc_number: '93001601', document: 'User Manual, EVK', version: 1.0.0}
+  - {doc_number: '93001501', document: 'User Manual, Maritime INS', version: 1.0.0}
+entries:
+- date: '2026-01-16'
+  version: 1.0.1
+  document: 'User Manual, Ground INS (93001201)'
+  breaking: false
+  highlights:
+  - Changed name of GNSS INS to Ground INS.
+- date: '2026-01-16'
+  version: 1.0.1
+  document: 'User Manual, Ground IMU (93001301)'
+  breaking: false
+  highlights:
+  - Changed name of IMU+ to Ground IMU.
+- date: '2025-04-29'
+  version: 1.0.0
+  document: 'User Manual, Ground INS (93001201)'
+  breaking: false
+  highlights:
+  - First revision-controlled GNSS INS user manual document.
+- date: '2025-04-29'
+  version: 1.0.0
+  document: 'User Manual, Ground IMU (93001301)'
+  breaking: false
+  highlights:
+  - First revision-controlled IMU+ user manual document.
+- date: '2025-04-29'
+  version: 1.0.0
+  document: 'User Manual, EVK (93001601)'
+  breaking: false
+  highlights:
+  - First revision-controlled EVK user manual document.
+- date: '2025-04-29'
+  version: 1.0.0
+  document: 'User Manual, Maritime INS (93001501)'
+  breaking: false
+  highlights:
+  - First revision-controlled Maritime INS user manual document.
+repository_activity:
+  note: >-
+    Undated release notes; last-push dates observed from the GitHub API on
+    2026-08-06. Recorded as corroborating signal, not as a published changelog.
+  observed: '2026-08-06'
+  repos:
+  - {name: docs-A1, last_push: '2026-08-06'}
+  - {name: amarinercontrol, last_push: '2026-07-28'}
+  - {name: user_tool, last_push: '2026-06-10'}
+  - {name: ardupilot, last_push: '2026-05-08'}
+  - {name: ANELLO_INS_Scripts, last_push: '2026-04-24'}
+  - {name: anello-handheld-scripts, last_push: '2026-04-02'}
+  - {name: ANELLO_ROS_Driver, last_push: '2025-07-23'}
+company_news:
+  note: >-
+    Company announcements are published to the newsroom rather than to a
+    developer changelog.
+  url: https://www.anellophotonics.com/newsroom

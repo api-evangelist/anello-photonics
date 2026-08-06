@@ -1,23 +1,112 @@
 aid: anello-photonics
 name: ANELLO Photonics
-description: 'ANELLO Photonics is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: 'ANELLO Photonics is a Santa Clara, California company building solid-state,
+  high-precision inertial navigation and sensing products for positioning, navigation
+  and orientation when GNSS is jammed, spoofed, blocked or otherwise unavailable. Its
+  products are powered by SiPhOG (Silicon Photonics Optical Gyroscope), a chip-scale
+  optical gyroscope built on standard semiconductor processes. The developer surface
+  is an embedded one rather than a web API: ANELLO Ground INS, Ground IMU, Maritime
+  INS, Aerial INS, X3 IMU and the Evaluation Kit expose a documented ASCII and RTCM-binary
+  message protocol over RS-232 serial, USB-C and UDP/Ethernet, with a public developer
+  manual, a first-party Python configuration and logging tool, a ROS/ROS2 driver that
+  publishes machine-readable .msg/.srv interface definitions, and PX4/ArduPilot and
+  MAVLink integrations.'
 url: https://raw.githubusercontent.com/api-evangelist/anello-photonics/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-06'
 modified: '2026-08-06'
+image: https://static1.squarespace.com/static/60404157b68a5453a865f98e/t/6a2742eefb5f0723d0178a9c/1624159401076/social.png?format=1500w
 tags:
 - Company
-apis: []
+- Inertial Navigation
+- Optical Gyroscope
+- Silicon Photonics
+- GNSS
+- GPS-Denied Navigation
+- Sensors
+- Robotics
+- Defense
+- Autonomous Vehicles
+- Embedded Systems
+- IMU
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- name: ANELLO Device Messaging Protocol
+  description: 'The ANELLO device interface: an ASCII sentence protocol (#APIMU, #APIM1,
+    #APGPS, #APHDG, #APINS, #APAHRS output; #APCFG, #APVEH, #APODO, #APPNG, #APECH,
+    #APRST input) plus an RTCM 10403 binary framing, carried over RS-232 serial, USB-C
+    virtual COM and UDP/Ethernet. There is no HTTP base URL — this is an embedded
+    wire protocol, not a web API — so baseURL is deliberately omitted rather than
+    fabricated.'
+  humanURL: https://docs-a1.readthedocs.io/en/latest/communication_messaging.html
+  x-transport:
+  - rs-232-serial
+  - usb-c-virtual-com
+  - udp-ethernet
+  properties:
+  - type: APIReference
+    url: https://docs-a1.readthedocs.io/en/latest/communication_messaging.html
+  - type: Conventions
+    url: conventions/anello-photonics-conventions.yml
+  - type: ErrorCatalog
+    url: errors/anello-photonics-error-codes.yml
+  - type: DataModel
+    url: data-model/anello-photonics-data-model.yml
+  - type: ROSInterface
+    url: ros/anello-photonics-ros-interfaces.yml
 common:
+- type: DomainSecurity
+  url: security/anello-photonics-domain-security.yml
 - type: Website
-  url: https://www.nasdaqprivatemarket.com/
+  url: https://www.anellophotonics.com/
+- type: DeveloperPortal
+  url: https://docs-a1.readthedocs.io/en/latest/
+- type: Documentation
+  url: https://docs-a1.readthedocs.io/en/latest/
+- type: APIReference
+  url: https://docs-a1.readthedocs.io/en/latest/communication_messaging.html
+- type: GettingStarted
+  url: https://docs-a1.readthedocs.io/en/latest/getting_started_quick.html
+- type: GitHubOrganization
+  url: https://github.com/Anello-Photonics
+- type: Blog
+  url: https://www.anellophotonics.com/blog
+- type: Support
+  url: https://www.anellophotonics.com/contact
+- type: PrivacyPolicy
+  url: https://www.anellophotonics.com/privacy-policy
+- type: Downloads
+  url: https://www.anellophotonics.com/downloads
+- type: LLMsTxt
+  url: llms/anello-photonics-llms.txt
+- type: Packages
+  url: packages/anello-photonics-packages.yml
+- type: SDKs
+  url: packages/anello-photonics-packages.yml
+- type: CLI
+  url: cli/anello-photonics-cli.yml
+- type: Conventions
+  url: conventions/anello-photonics-conventions.yml
+- type: ErrorCatalog
+  url: errors/anello-photonics-error-codes.yml
+- type: DataModel
+  url: data-model/anello-photonics-data-model.yml
+- type: Conformance
+  url: conformance/anello-photonics-conformance.yml
+- type: Lifecycle
+  url: lifecycle/anello-photonics-lifecycle.yml
+- type: ChangeLog
+  url: changelog/anello-photonics-changelog.yml
+- type: ROSInterface
+  url: ros/anello-photonics-ros-interfaces.yml
+x-enrichment:
+  date: '2026-08-06'
+  status: enriched
+  artifacts_added: 11
+  pass: local-v1

@@ -1,0 +1,200 @@
+generated: '2026-08-06'
+method: searched
+source: https://docs-a1.readthedocs.io/en/latest/communication_messaging.html
+also_source:
+- https://docs-a1.readthedocs.io/en/latest/unit_configuration.html
+- https://docs-a1.readthedocs.io/en/latest/vehicle_configuration.html
+summary: >-
+  ANELLO's interface is an embedded wire protocol, not an HTTP API. There is no
+  URL, no HTTP verb, no status code, no auth token, no rate limit, no pagination
+  and no idempotency key. The cross-cutting semantics below are the real
+  equivalents: transport and framing, the ASCII sentence grammar, the XOR
+  checksum, the read/write configuration verbs, and the #APERR error envelope.
+
+transport:
+  interfaces:
+  - product: ANELLO EVK
+    links: [Serial (USB-C), UDP (Ethernet)]
+    default_baud: 921600
+  - product: ANELLO Ground INS
+    links: [Serial (RS-232), UDP (Automotive Ethernet)]
+    default_baud: 230400
+  - product: ANELLO Ground IMU
+    links: [Serial (RS-232)]
+    default_baud: 230400
+  serial_frame:
+    data_bits: 8
+    stop_bits: 1
+    parity: none
+    rs232_voltage: '+/- 7V'
+  ports:
+  - logical: Data Port
+    outputs: [Data Messages]
+    inputs: [RTCM correction stream]
+    physical: >-
+      EVK — lowest virtual COM number (FTDI creates 4); UDP port 1. Ground
+      INS/IMU — RS232-2 (OS-assigned COM number, not necessarily lowest).
+  - logical: Configuration Port
+    outputs: [NMEA messages (firmware v1.2 and later)]
+    inputs: [Configuration messages, Odometer data]
+    physical: 'EVK — highest virtual COM number; UDP port 2. Ground INS/IMU — RS232-1.'
+  - logical: Odometer Port
+    outputs: []
+    inputs: [Odometer messages]
+    physical: 'UDP only — EVK port 3; frees the serial configuration port while logging.'
+
+message_grammar:
+  style: comma-delimited ASCII sentence
+  start_character: '#'
+  preamble: AP
+  delimiter: ','
+  checksum_indicator: '*'
+  terminator: CRLF
+  form: '#AP<TYPE>,<field>,<field>,...*<CS>'
+  example_output: '#APIMU,<Time>,<T_Sync>,<AX>,<AY>,<AZ>,<WX>,<WY>,<WZ>,<OG_WZ>,<ODO>,<ODO Time>,<Temp>*<CS>'
+
+checksum:
+  ascii:
+    algorithm: XOR of every byte between '#' and '*'
+    encoding: two-digit uppercase hexadecimal
+    reference_snippet: |
+      msg = bytearray("APCFG,W,odr,2,msg,IMU", "ascii")
+      checksum = 0
+      for c in msg:
+          checksum = checksum ^ int(c)
+      print("#%s*%02X" % (msg.decode(), checksum))
+    worked_example: '#APCFG,W,odr,2,msg,IMU*4B'
+  binary:
+    envelope: RTCM STANDARD 10403
+    preamble: '0xD3'
+    header: 6-bit reserved field + 10-bit message length
+    trailer: 3-byte CRC
+
+output_data_rates:
+  APIMU: configurable via the `odr` parameter (20, 50, 100 or 200 Hz)
+  APINS: 100 Hz
+  APGPS: 4 Hz
+
+configuration:
+  verbs:
+    r: read from RAM
+    w: write to RAM
+    R: read from flash
+    W: write to flash
+  unit_config:
+    message: '#APCFG,<r|w|R|W>,<param>,<value>*<CS>'
+    docs: https://docs-a1.readthedocs.io/en/latest/unit_configuration.html
+    parameters:
+    - {code: orn, name: Orientation, values: '8 right-hand-rule frames, +X+Y+Z through -X+Y-Z', default: '+X+Y+Z'}
+    - {code: aln, name: Alignment angles, values: 'degrees, roll/pitch/yaw order', default: '+0.0+0.0+0.0'}
+    - {code: odr, name: Output data rate, values: '20, 50, 100, 200 Hz', requires_reset: true}
+    - {code: gps1, name: Enable GPS 1, values: 'on, off'}
+    - {code: gps2, name: Enable GPS 2, values: 'on, off'}
+    - {code: odo, name: Odometer units, values: 'mps, mph, kph, fps'}
+    - {code: fog, name: Enable FOG, values: 'on, off'}
+    - {code: dhcp, name: DHCP, values: 'on, off'}
+    - {code: lip, name: EVK IP address, values: aaa.bbb.ccc.ddd}
+    - {code: rip, name: Computer IP address, values: aaa.bbb.ccc.eee}
+    - {code: rport1, name: UDP data port, values: 1-65535}
+    - {code: rport2, name: UDP configuration port, values: 1-65535}
+    - {code: rport3, name: UDP odometer port, values: 1-65535}
+    - {code: min, name: APCFG output interval, values: 'minutes; 0 disables'}
+    - {code: lpa, name: Accelerometer cutoff frequency, values: 'Hz; 0 disables filter'}
+    - {code: lpw, name: MEMS gyro cutoff frequency, values: 'Hz; 0 disables filter'}
+    - {code: lpo, name: FOG cutoff frequency, values: 'Hz; 0 disables filter'}
+    - {code: ntrip, name: NTRIP input channel, values: '0 off, 1 serial, 2 UDP', default: '0'}
+    - {code: sync, name: Sync pulse enable, values: 'on, off'}
+    - {code: mfm, name: Output message format, values: '1 ASCII, 4 RTCM binary'}
+    - {code: uart, name: Enable serial output, values: 'on, off'}
+    - {code: eth, name: Enable Ethernet output, values: 'on, off'}
+    - {code: nmea, name: NMEA output messages, values: 'bit 0 GGA, bit 1 GSA, bit 2 RMC'}
+    - {code: bau, name: Baud rate, values: bits per second, requires_reset: true}
+    - {code: nhc, name: Non-holonomic constraint, values: '0 default vehicle, 2 heavy vibration, 7 NHC off'}
+    ground_imu_ahrs_only:
+    - {code: ahrs, name: Enable AHRS, storage: flash only}
+    - {code: azupt, name: Enable ZUPT, values: '0 off, 1 heading lock', storage: RAM only}
+    - {code: ahdg, name: Heading update, values: 'degrees x 1000 (180.123 -> 180123)', storage: RAM only}
+  vehicle_config:
+    message: '#APVEH,<r|w|R|W>,<param>,<value>*<CS>'
+    docs: https://docs-a1.readthedocs.io/en/latest/vehicle_configuration.html
+    covers: [lever arms, antenna baseline calibration]
+  odometer:
+    message: '#APODO,<dir>,<speed>*<CS>'
+    direction: "'+' forward, '-' reverse"
+    example: '#APODO,-,-24*53'
+  utility:
+  - {command: '#APPNG*48', name: Ping, response: '#APPNG,0*54'}
+  - {command: '#APECH,<text>*<CS>', name: Echo, response: identical echo of the input sentence}
+  - {command: '#APRST,0*58', name: Reset, response: 'none — output suspends briefly while the unit resets'}
+
+time_and_tracing:
+  request_id: none
+  correlation: >-
+    Every output sentence carries a `Time` field in milliseconds since power on;
+    APGPS carries GPS time in integer nanoseconds and is timestamped at the PPS
+    edge, which is the documented way to correlate system time to GPS time.
+  external_sync_pulse:
+    enabled_by: '#APCFG sync'
+    requires_reset: true
+    max_rate: 100 Hz
+    min_pulse_width: 5 ms
+    voltage: '3.3 V standard; 1.5-5 V supported'
+    surfaced_in: APIMU `T_Sync` field (zero when sync is disabled)
+  pps:
+    products: [Ground INS, EVK]
+    note: >-
+      GNSS receiver keeps emitting PPS after a GPS time fix is lost; accuracy
+      degrades around 1 us per second. MCU time of the PPS interrupt is placed in
+      the APINS message.
+
+error_envelope:
+  message: '#APERR,<error code>*<CS>'
+  catalog: errors/anello-photonics-error-codes.yml
+
+idempotency:
+  supported: false
+  note: >-
+    No idempotency key, request id or replay-safe write contract is documented.
+    Configuration writes are last-write-wins against RAM or flash, distinguished
+    only by the lowercase/uppercase verb. Recorded as absent on purpose — no
+    `Idempotency` pointer is emitted for this provider.
+
+pagination:
+  supported: false
+  note: Streaming telemetry protocol; there is no collection to page.
+
+rate_limiting:
+  supported: false
+  note: >-
+    No rate-limit signalling. Throughput is bounded by the configured output
+    data rate (`odr`) and the serial baud rate (`bau`), not by a quota.
+
+authentication:
+  supported: false
+  note: >-
+    Physical-link trust model. Access is possession of the RS-232/USB port or of
+    the configured UDP endpoint; no credential, key or token is documented. The
+    only protection recorded is `Flash locked` (error code 9), which guards
+    persistent writes.
+
+versioning:
+  api_version_scheme: none
+  note: >-
+    Behaviour is versioned by device firmware, not by a protocol version field.
+    Documented firmware-gated behaviours include the APIMU `T_Sync` field
+    (firmware >= v1.0.39), NMEA output on the configuration port (firmware
+    v1.2 and later) and ROS driver support (firmware >= v1.1.1).
+  see: lifecycle/anello-photonics-lifecycle.yml
+
+corrections_input:
+  standard: RTCM 3.3 MSM (MSM4, MSM5, MSM7)
+  path: forwarded to the data port to let the GNSS receivers reach RTK precision
+  client: NTRIP client shipped in the ANELLO Python Program
+
+cross_links:
+  errors: errors/anello-photonics-error-codes.yml
+  data_model: data-model/anello-photonics-data-model.yml
+  lifecycle: lifecycle/anello-photonics-lifecycle.yml
+  conformance: conformance/anello-photonics-conformance.yml
+  ros_interfaces: ros/anello-photonics-ros-interfaces.yml
+  cli: cli/anello-photonics-cli.yml

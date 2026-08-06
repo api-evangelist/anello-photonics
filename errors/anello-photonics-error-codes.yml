@@ -1,0 +1,83 @@
+generated: '2026-08-06'
+method: searched
+source: https://docs-a1.readthedocs.io/en/latest/communication_messaging.html#error-messages
+format: anello-aperr
+rfc9457: false
+envelope:
+  message: '#APERR,<error code>*<CS>'
+  emitted_when: an incorrect command is sent to the unit
+  transport: configuration port (and data port for RTCM input errors)
+  note: >-
+    Not RFC 9457 problem+json — this is an embedded ASCII sentence protocol. The
+    code is a small integer; there is no type URI, title, detail or instance
+    field. Codes are reproduced verbatim from the ANELLO Developer Manual.
+error_codes:
+- code: 1
+  description: No start character (#)
+  cause: The sentence did not begin with the '#' lead code identifier.
+  remediation: Prefix the sentence with '#'.
+- code: 2
+  description: Read/Write indicator missing (from #APCFG or #APVEH)
+  cause: A configuration sentence omitted the r/w/R/W verb.
+  remediation: 'Send #APCFG,<r|w|R|W>,... or #APVEH,<r|w|R|W>,...'
+  applies_to: ['#APCFG', '#APVEH']
+- code: 3
+  description: Incomplete message (checksum missing)
+  cause: The sentence ended without the '*' checksum indicator and hex checksum.
+  remediation: Append '*' plus the two-digit uppercase XOR checksum, then CRLF.
+- code: 4
+  description: Incorrect checksum
+  cause: The transmitted checksum did not match the XOR of the bytes between '#' and '*'.
+  remediation: Recompute the XOR checksum; letters must be uppercase.
+- code: 5
+  description: Invalid preamble (AP)
+  cause: The two characters after '#' were not 'AP'.
+  remediation: Use the AP preamble on every ANELLO sentence.
+- code: 6
+  description: Invalid message type
+  cause: The message type following the AP preamble is not one the firmware implements.
+  remediation: Use a documented type (CFG, VEH, ODO, PNG, ECH, RST, ...).
+- code: 7
+  description: Invalid field
+  cause: A named configuration field is not recognised for this product/firmware.
+  remediation: Check the parameter code against the unit-configuration table for the product.
+- code: 8
+  description: Invalid value
+  cause: The value is outside the allowed set or range for that parameter.
+  remediation: Check the allowed values for the parameter.
+- code: 9
+  description: Flash locked
+  cause: A persistent (uppercase W) write was attempted while flash is locked.
+  remediation: Unlock flash before writing persistent configuration.
+- code: 10
+  description: Unexpected character
+  cause: Extra characters were sent with an identity/status query that takes no argument.
+  applies_to: ['#APPID', '#APSTA', '#APVER', '#APSER', '#APFSN', '#APFHW']
+  remediation: Send the query with no additional fields.
+- code: 11
+  description: Disabled command
+  cause: An odometer message was sent while the odometer input is disabled.
+  applies_to: ['#APODO']
+  remediation: Enable the odometer input before sending #APODO.
+positive_responses:
+- command: '#APPNG*48'
+  response: '#APPNG,0*54'
+  meaning: Ping acknowledged; the serial port is correctly configured.
+- command: '#APECH,<text>*<CS>'
+  response: identical sentence echoed back
+  meaning: Port configuration and checksum generator both verified.
+- command: '#APRST,0*58'
+  response: none
+  meaning: The unit resets; output is suspended briefly.
+service_level_errors:
+  ros:
+    source: ros/set_heading_with_unc.srv
+    fields:
+    - {name: is_success, type: bool}
+    - {name: message, type: string}
+    note: >-
+      The ROS driver's heading-set service returns a boolean plus a free-text
+      message rather than an #APERR code.
+cross_links:
+  conventions: conventions/anello-photonics-conventions.yml
+  known_issues: https://docs-a1.readthedocs.io/en/latest/known_limitations.html

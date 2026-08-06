@@ -1,0 +1,121 @@
+generated: '2026-08-06'
+method: searched
+source: https://github.com/Anello-Photonics/ANELLO_ROS_Driver
+raw_base: https://raw.githubusercontent.com/Anello-Photonics/ANELLO_ROS_Driver/main
+license: MIT
+summary: >-
+  ANELLO publishes no OpenAPI, GraphQL SDL or AsyncAPI — but it does publish a
+  machine-readable interface definition set: the ROS message (.msg) and service
+  (.srv) IDL files that ship in the first-party ANELLO_ROS_Driver. These are the
+  strongest machine-readable contract on ANELLO's developer surface and are
+  harvested here verbatim. Each .msg is a typed projection of the corresponding
+  ASCII sentence documented in data-model/anello-photonics-data-model.yml; the
+  .srv files are the only request/response pairs ANELLO defines anywhere.
+idl: ROS interface definition (rosidl)
+ros_versions: [ROS 1 (catkin, main branch), ROS 2 (ros2_main branch)]
+supported_firmware: '>= v1.1.1'
+supported_products: [ANELLO EVK, ANELLO Ground INS (GNSS INS), ANELLO Ground IMU (IMU+)]
+
+messages:
+- file: APIMU.msg
+  raw: https://raw.githubusercontent.com/Anello-Photonics/ANELLO_ROS_Driver/main/msg/APIMU.msg
+  wire_message: APIMU
+  fields: [mcu_time, ax, ay, az, wx, wy, wz, wz_fog, odometer_speed, odometer_time, temp]
+  types: {all: float64}
+- file: APIM1.msg
+  raw: https://raw.githubusercontent.com/Anello-Photonics/ANELLO_ROS_Driver/main/msg/APIM1.msg
+  wire_message: APIM1
+  fields: [mcu_time, T_Sync, ax, ay, az, wx, wy, wz, wz_fog, temp]
+  types: {all: float64}
+- file: APGPS.msg
+  raw: https://raw.githubusercontent.com/Anello-Photonics/ANELLO_ROS_Driver/main/msg/APGPS.msg
+  wire_message: APGPS
+  fields: [mcu_time, gps_time, lat, lon, alt_ellipsoid, alt_msl, speed, heading,
+    hacc, vacc, pdop, fix_type, sat_num, speed_accuracy, heading_accuracy, rtk_fix_status]
+  types: {fix_type: uint8, sat_num: uint8, rtk_fix_status: uint8, default: float64}
+- file: APHDG.msg
+  raw: https://raw.githubusercontent.com/Anello-Photonics/ANELLO_ROS_Driver/main/msg/APHDG.msg
+  wire_message: APHDG
+  fields: [mcu_time, gps_time, rel_pos_n, rel_pos_e, rel_pos_d, rel_pos_length,
+    rel_pos_heading, rel_pos_length_accuracy, rel_pos_heading_accuracy, status_flags,
+    gnss_fix_ok, diff_soln, rel_pos_valid, carrier_solution, is_moving, ref_pos_miss,
+    ref_obs_miss, rel_pos_heading_valid, rel_pos_normalized]
+  note: >-
+    The driver decomposes the wire `flags` bitfield into named uint8 fields
+    alongside the raw uint16 status_flags — a genuine improvement over the ASCII
+    sentence.
+- file: APINS.msg
+  raw: https://raw.githubusercontent.com/Anello-Photonics/ANELLO_ROS_Driver/main/msg/APINS.msg
+  wire_message: APINS
+  fields: [mcu_time, gps_time, ins_status, lat, lon, Alt_ellipsoid, vn, ve, vd,
+    roll, pitch, heading, zupt]
+  types: {ins_status: uint8, zupt: uint8, default: float64}
+- file: APAHRS.msg
+  raw: https://raw.githubusercontent.com/Anello-Photonics/ANELLO_ROS_Driver/main/msg/APAHRS.msg
+  wire_message: APAHRS
+  fields: [mcu_time, sync_time, roll, pitch, heading, zupt]
+  types: {zupt: uint8, default: float64}
+- file: APCOV.msg
+  raw: https://raw.githubusercontent.com/Anello-Photonics/ANELLO_ROS_Driver/main/msg/APCOV.msg
+  wire_message: null
+  fields: [mcu_time, cov_lat_lat, cov_lon_lon, cov_alt_alt, cov_lat_lon, cov_lat_alt,
+    cov_lon_alt, cov_vn_vn, cov_ve_ve, cov_vd_vd, cov_vn_ve, cov_vn_vd, cov_ve_vd,
+    cov_roll_roll, cov_pitch_pitch, cov_heading_heading, cov_roll_pitch,
+    cov_roll_heading, cov_pitch_heading]
+  types: {all: float64}
+  note: >-
+    Full position/velocity/attitude covariance. ROS-only — no equivalent ASCII
+    sentence is documented in the A-1 developer manual.
+- file: APHEALTH.msg
+  raw: https://raw.githubusercontent.com/Anello-Photonics/ANELLO_ROS_Driver/main/msg/APHEALTH.msg
+  wire_message: null
+  fields: [position_acc_flag, heading_health_flag, gyro_health_flag]
+  types: {all: uint8}
+  note: ROS-only. No equivalent ASCII sentence is documented.
+- file: APODO.msg
+  raw: https://raw.githubusercontent.com/Anello-Photonics/ANELLO_ROS_Driver/main/msg/APODO.msg
+  wire_message: APODO
+  direction: input
+  fields: [odo_speed]
+  types: {all: float64}
+
+services:
+- file: cmd_and_rsp.srv
+  raw: https://raw.githubusercontent.com/Anello-Photonics/ANELLO_ROS_Driver/main/srv/cmd_and_rsp.srv
+  request: [{name: command, type: string}]
+  response: [{name: response, type: string}]
+  note: >-
+    Generic passthrough for the ASCII command surface (#APCFG / #APVEH / #APPNG /
+    #APECH / #APRST). The request is an ANELLO sentence and the response is the
+    unit's raw reply, including any #APERR,<code> error sentence.
+- file: set_heading_no_unc.srv
+  raw: https://raw.githubusercontent.com/Anello-Photonics/ANELLO_ROS_Driver/main/srv/set_heading_no_unc.srv
+  request: [{name: heading, type: float32}]
+  response: [{name: is_success, type: bool}, {name: message, type: string}]
+- file: set_heading_with_unc.srv
+  raw: https://raw.githubusercontent.com/Anello-Photonics/ANELLO_ROS_Driver/main/srv/set_heading_with_unc.srv
+  request:
+  - {name: heading, type: float32, units: degrees}
+  - {name: heading_uncertainty, type: float32, units: degrees}
+  response: [{name: is_success, type: bool}, {name: message, type: string}]
+
+divergence:
+  ros_only: [APCOV, APHEALTH]
+  wire_only: [APCFG, APVEH, APPNG, APECH, APRST]
+  note: >-
+    The ROS surface and the ASCII wire surface are overlapping but not identical
+    projections of the same data core. Covariance and health are published only
+    over ROS; the configuration and utility sentences are reachable over ROS only
+    through the generic cmd_and_rsp service.
+
+coverage:
+  messages_harvested: 9
+  services_harvested: 3
+  wire_messages_with_ros_equivalent: 7
+  ros_only_messages: 2
+
+cross_links:
+  data_model: data-model/anello-photonics-data-model.yml
+  conventions: conventions/anello-photonics-conventions.yml
+  errors: errors/anello-photonics-error-codes.yml
+  packages: packages/anello-photonics-packages.yml

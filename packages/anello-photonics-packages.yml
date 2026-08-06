@@ -1,0 +1,109 @@
+generated: '2026-08-06'
+method: searched
+source: https://github.com/Anello-Photonics
+notes: >-
+  ANELLO publishes no client libraries to npm, PyPI, Maven Central, NuGet,
+  pkg.go.dev, RubyGems, Packagist or crates.io — every registry lookup below
+  returned 404. Its first-party tooling is distributed as source from the
+  Anello-Photonics GitHub organization and installed by cloning the repo plus
+  `pip install -r requirements.txt` (Python) or `catkin_make` / `colcon build`
+  (ROS). Those repositories are recorded here as the real, official client
+  libraries; `registry: github` reflects how they are actually shipped.
+registry_probes:
+- registry: pypi
+  queried: [anello, anello-photonics, anello_ins, pyanello, siphog]
+  status: 404
+- registry: npm
+  queried: [anello, "@anello/sdk", anello-photonics]
+  status: 404
+- registry: crates.io
+  queried: [anello]
+  status: 403
+- registry: ros-index
+  queried: [anello_ros_driver]
+  status: 404
+packages:
+- language: python
+  registry: github
+  name: user_tool
+  url: https://github.com/Anello-Photonics/user_tool
+  install: git clone https://github.com/Anello-Photonics/user_tool.git && pip install -r requirements.txt
+  license: MIT
+  official: true
+  description: >-
+    Logging and configuration tool for the ANELLO A-1 family. Ships
+    `board_tools/user_program.py` (interactive configuration + logging),
+    `board_tools/graph_demo.py`, and `board_tools/src/tools`, the reusable
+    Python library for speaking the ANELLO ASCII/RTCM protocol over serial
+    or UDP. Requires Python 3.9, cutie, numpy, matplotlib, pyserial,
+    PySimpleGUI.
+  role: sdk-and-cli
+- language: cpp
+  registry: github
+  name: ANELLO_ROS_Driver
+  url: https://github.com/Anello-Photonics/ANELLO_ROS_Driver
+  install: git clone https://github.com/Anello-Photonics/ANELLO_ROS_Driver.git ~/catkin_ws/src && catkin_make
+  license: MIT
+  official: true
+  description: >-
+    ROS 1 wrapper for data collection and unit configuration (ROS 2 support on
+    the `ros2_main` branch). Supports EVK, Ground INS (GNSS INS) and Ground IMU
+    (IMU+) on firmware >= v1.1.1, over UART or Ethernet, and bundles an NTRIP
+    client. Publishes nine `.msg` and three `.srv` machine-readable interface
+    definitions — harvested to `ros/`.
+  role: driver
+- language: c
+  registry: github
+  name: decoder
+  url: https://github.com/Anello-Photonics/decoder
+  official: true
+  description: >-
+    C/C++ decoder for the ANELLO binary log formats (`a1bin`, `artcm`) with an
+    OxTS comparison path. Source-only; no published release artifacts.
+  role: decoder
+- language: python
+  registry: github
+  name: ANELLO_INS_Scripts
+  url: https://github.com/Anello-Photonics/ANELLO_INS_Scripts
+  install: git clone https://github.com/Anello-Photonics/ANELLO_INS_Scripts.git && pip install pymavlink pyserial python-can
+  official: true
+  description: >-
+    Python utilities for ANELLO Maritime INS over MAVLink — firmware uploader
+    (`anello_fw_uploader.py`), lever-arm/Ethernet configuration
+    (`Maritime_INS_CFG.py`), a PX4 listener-topic viewer
+    (`Tools/Listener_Topics.py`) and Ethernet/RS-232/CAN communication checks
+    (`Tools/comm_checks.py`).
+  role: tools
+- language: python
+  registry: github
+  name: anello-handheld-scripts
+  url: https://github.com/Anello-Photonics/anello-handheld-scripts
+  install: git clone https://github.com/Anello-Photonics/anello-handheld-scripts.git && pip install -r requirements.txt
+  license: MIT
+  official: true
+  description: >-
+    Calibration scripts for ANELLO Handheld — `pdr_speed_calibration.py`
+    derives the four PX4 PDR walking-speed parameters (EKF2_PDR_COEFF_F/V/B,
+    EKF2_PDR_YAW_OFF) from a `.ulg` log.
+  role: tools
+forks_and_integrations:
+  note: >-
+    The GitHub org also carries forks used for platform integration rather than
+    first-party libraries. They are recorded for provenance and marked
+    official: false.
+  repos:
+  - name: ardupilot
+    url: https://github.com/Anello-Photonics/ardupilot
+    official: false
+  - name: amarinercontrol
+    url: https://github.com/Anello-Photonics/amarinercontrol
+    official: false
+  - name: rtklib
+    url: https://github.com/Anello-Photonics/rtklib
+    official: false
+  - name: carvig
+    url: https://github.com/Anello-Photonics/carvig
+    official: false
+  - name: ignav
+    url: https://github.com/Anello-Photonics/ignav
+    official: false

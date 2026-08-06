@@ -1,0 +1,129 @@
+generated: '2026-08-06'
+method: searched
+source: https://docs-a1.readthedocs.io/en/latest/communication_messaging.html
+also_source:
+- https://github.com/Anello-Photonics/ANELLO_ROS_Driver
+- https://github.com/Anello-Photonics/ANELLO_INS_Scripts
+- https://www.anellophotonics.com/products/x3-imu
+note: >-
+  Standards conformance here is about the navigation/robotics stack ANELLO
+  actually interoperates with, transcribed from its own documentation and
+  repositories. The web-API standards are listed as non-conforming because
+  ANELLO exposes no HTTP surface at all — that is an accurate description of an
+  embedded product, not a deficiency finding.
+standards:
+- id: rtcm-10403
+  name: RTCM STANDARD 10403 binary envelope
+  conforms: true
+  evidence: >-
+    "The binary packets use an RTCM standard 10403 envelope for each message" —
+    preamble 0xD3, 6-bit reserved, 10-bit length, payload, 3-byte CRC.
+  source: https://docs-a1.readthedocs.io/en/latest/communication_messaging.html
+- id: rtcm-3.3-msm
+  name: RTCM 3.3 Multiple Signal Messages (MSM4/MSM5/MSM7)
+  conforms: true
+  role: consumer
+  evidence: >-
+    "Standard RTCM3.3 in MSM format, including MSM4, MSM5, and MSM7 messages,
+    are supported" as correction input on the data port for RTK.
+- id: ntrip
+  name: NTRIP (Networked Transport of RTCM via Internet Protocol)
+  conforms: true
+  role: client
+  evidence: >-
+    NTRIP client shipped in the ANELLO Python Program and in the ROS driver;
+    `ntrip` unit-configuration parameter selects the input channel (0 off, 1
+    serial, 2 UDP).
+- id: nmea-0183
+  name: NMEA 0183 sentences
+  conforms: true
+  role: producer
+  evidence: >-
+    NMEA output on the configuration port from firmware v1.2; the `nmea`
+    configuration parameter is a bitfield selecting GGA (bit 0), GSA (bit 1)
+    and RMC (bit 2).
+- id: mavlink
+  name: MAVLink
+  conforms: true
+  evidence: >-
+    Maritime INS firmware upload and configuration are performed over MAVLink
+    (default udp:0.0.0.0:14550) by ANELLO_INS_Scripts.
+  source: https://github.com/Anello-Photonics/ANELLO_INS_Scripts
+- id: ros1
+  name: ROS 1 (catkin)
+  conforms: true
+  evidence: >-
+    First-party ANELLO_ROS_Driver with package.xml, CMakeLists.txt and nine
+    .msg plus three .srv interface definitions.
+  artifacts: ros/anello-photonics-ros-interfaces.yml
+- id: ros2
+  name: ROS 2
+  conforms: true
+  evidence: '"For ROS2 support, see the ros2_main branch." — ANELLO_ROS_Driver readme.'
+- id: px4
+  name: PX4 autopilot
+  conforms: true
+  evidence: >-
+    X3 IMU documented with PX4/Pixhawk integration; handheld calibration script
+    emits PX4 EKF2_PDR_* parameters; Listener_Topics.py browses PX4 topics.
+- id: ardupilot
+  name: ArduPilot
+  conforms: true
+  evidence: >-
+    X3 IMU product page names ArduPilot integration; the org maintains an
+    ardupilot fork.
+- id: sae-j1939
+  name: SAE J1939 / CAN PGN
+  conforms: partial
+  evidence: >-
+    Tools/comm_checks.py verifies a configurable CAN PGN against the INS using
+    PEAK-System PCAN drivers. The PGN set itself is not published in the online
+    manual.
+- id: rs-232
+  name: TIA/EIA RS-232
+  conforms: true
+  evidence: 'Ground INS and Ground IMU RS-232 links, +/- 7V, 8-N-1, 230400 baud default.'
+- id: ulog
+  name: PX4 ULog (.ulg)
+  conforms: true
+  role: consumer
+  evidence: anello-handheld-scripts reads .ulg logs via ulog2csv/pyulog.
+- id: openapi
+  name: OpenAPI
+  conforms: false
+  evidence: >-
+    No HTTP API surface exists. /openapi.json, /openapi.yaml and /swagger.json
+    all returned 404 on www.anellophotonics.com and docs-a1.readthedocs.io.
+- id: asyncapi
+  name: AsyncAPI
+  conforms: false
+  evidence: >-
+    The event surface is a physical wire protocol, not a broker/webhook surface.
+    No AsyncAPI document is published.
+- id: oauth2
+  name: OAuth 2.0
+  conforms: false
+  evidence: No credential model is documented; access is physical-link possession.
+- id: rfc9457
+  name: RFC 9457 Problem Details
+  conforms: false
+  evidence: 'Errors are ASCII sentences of the form #APERR,<code>*<CS>.'
+- id: rfc9116
+  name: RFC 9116 security.txt
+  conforms: false
+  evidence: >-
+    https://www.anellophotonics.com/.well-known/security.txt returned 404
+    ({"message":"security.txt not found"}) on 2026-08-06.
+- id: llmstxt
+  name: llms.txt
+  conforms: true
+  evidence: >-
+    A hand-authored llms.txt with source-hierarchy guidance, terminology rules
+    and a full link taxonomy is served at https://www.anellophotonics.com/llms.txt
+    (HTTP 200, 11,251 bytes). Harvested verbatim to llms/.
+compliance_program:
+  published: false
+  note: >-
+    No trust center, SOC 2 / ISO 27001 / FedRAMP claim or compliance page was
+    found. trust., security. and status. subdomains do not resolve; /security,
+    /trust and /compliance return 404. No `Compliance` pointer is emitted.

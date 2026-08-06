@@ -1,0 +1,183 @@
+generated: '2026-08-06'
+method: searched
+source: https://docs-a1.readthedocs.io/en/latest/communication_messaging.html
+also_source: https://github.com/Anello-Photonics/ANELLO_ROS_Driver/tree/main/msg
+summary: >-
+  ANELLO's data model is a message model, not a resource graph. There are no
+  entities with identifiers and no relationships in the REST sense — the unit
+  emits a fixed set of timestamped telemetry sentences and accepts a fixed set of
+  input sentences. Field lists below are transcribed verbatim from the ANELLO
+  Developer Manual; the ROS column names come from the driver's .msg files
+  harvested to ros/.
+root_key:
+  field: Time
+  units: ms
+  description: >-
+    Milliseconds since power on. Present on every output message and is the join
+    key across the streams. APGPS additionally carries GPS Time in integer ns
+    (timestamped at the PPS edge) and is the documented bridge from system time
+    to GPS time.
+
+messages:
+- id: APIMU
+  kind: output
+  products: [ANELLO EVK, ANELLO Ground INS]
+  rate: 'configurable via odr (20/50/100/200 Hz)'
+  ros_msg: ros/APIMU.msg
+  description: IMU output — accelerations, MEMS angular rates and the optical-gyro Z rate.
+  fields:
+  - {index: 0, name: APIMU, description: Sentence identifier}
+  - {index: 1, name: Time, units: ms, description: Time since power on}
+  - {index: 2, name: T_Sync, units: ms, description: 'Time at last sync rising edge (zero when sync config disabled; absent before firmware v1.0.39)'}
+  - {index: 3, name: AX, units: g, description: X-axis acceleration}
+  - {index: 4, name: AY, units: g, description: Y-axis acceleration}
+  - {index: 5, name: AZ, units: g, description: Z-axis acceleration}
+  - {index: 6, name: WX, units: deg/s, description: X-axis angular rate (MEMS)}
+  - {index: 7, name: WY, units: deg/s, description: Y-axis angular rate (MEMS)}
+  - {index: 8, name: WZ, units: deg/s, description: Z-axis angular rate (MEMS)}
+  - {index: 9, name: OG_WZ, units: deg/s, description: High-precision Z-axis angular rate (ANELLO optical gyro)}
+  - {index: 10, name: ODO, units: m/s, description: Scaled composite odometer value}
+  - {index: 11, name: ODO Time, units: ms, description: Timestamp of odometer reading}
+  - {index: 12, name: Temp, units: degC, description: Temperature}
+- id: APIM1
+  kind: output
+  products: [ANELLO Ground IMU]
+  ros_msg: ros/APIM1.msg
+  description: Same as APIMU without the odometer fields.
+- id: APGPS
+  kind: output
+  products: [ANELLO EVK, ANELLO Ground INS]
+  rate: 4 Hz
+  ros_msg: ros/APGPS.msg
+  description: GNSS position/velocity/time (PVT) solution.
+  fields:
+  - {index: 0, name: APGPS, description: Sentence identifier}
+  - {index: 1, name: Time, units: ms, description: Time since power on}
+  - {index: 2, name: GPS Time, units: ns, description: GPS time in integer nanoseconds}
+  - {index: 3, name: Lat, units: deg, description: "Latitude ('+' north, '-' south)"}
+  - {index: 4, name: Long, units: deg, description: "Longitude ('+' east, '-' west)"}
+  - {index: 5, name: Alt ellipsoid, units: m, description: Height above ellipsoid}
+  - {index: 6, name: Alt msl, units: m, description: Height above mean sea level}
+  - {index: 7, name: Speed, units: m/s, description: GNSS speed}
+  - {index: 8, name: Heading, units: deg, description: GNSS heading (ground track)}
+  - {index: 9, name: Hacc, units: m, description: Horizontal accuracy}
+  - {index: 10, name: Vacc, units: m, description: Vertical accuracy}
+  - {index: 11, name: PDOP, description: Position dilution of precision}
+  - {index: 12, name: FixType, description: '0 no fix, 2 2D fix, 3 3D fix, 5 time only'}
+  - {index: 13, name: SatNum, description: Number of satellites used in solution}
+  - {index: 14, name: Speed Acc, description: Accuracy of GNSS speed measurement}
+  - {index: 15, name: Hdg Acc, description: Accuracy of GNSS heading measurement}
+  - {index: 16, name: RTK Status, description: '0 single point positioning, 1 RTK float, 2 RTK fixed'}
+- id: APHDG
+  kind: output
+  products: [ANELLO EVK, ANELLO Ground INS]
+  requires: both ANT1 and ANT2 connected (dual GNSS)
+  ros_msg: ros/APHDG.msg
+  description: Dual-antenna relative position and heading.
+  fields:
+  - {index: 0, name: APHDG, description: Sentence identifier}
+  - {index: 1, name: Time, units: ms, description: Time since power on}
+  - {index: 2, name: GPS Time, units: ns, description: 'GPS time in integer ns (not UTC)'}
+  - {index: 3, name: relPosN, units: m, description: North component of relative position vector}
+  - {index: 4, name: relPosE, units: m, description: East component of relative position vector}
+  - {index: 5, name: relPosD, units: m, description: Down component of relative position vector}
+  - {index: 6, name: relPosLength, units: m, description: Length of relative position vector between antennae}
+  - {index: 7, name: relPosHeading, units: deg, description: Heading from primary antenna to secondary antenna}
+  - {index: 8, name: RelPosLength Accuracy, units: m, description: Accuracy of dual-antenna baseline length}
+  - {index: 9, name: relPosHeading Accuracy, units: deg, description: Accuracy of dual-antenna heading}
+  - {index: 10, name: flags, description: 'Bit 0 gnssFixOK, bit 1 diffSoln, bit 2 relPosValid, bits 4..3 carrSoln, bit 5 isMoving, bit 6 refPosMiss, bit 7 refObsMiss, bit 8 relPosHeadingValid, bit 9 relPosNormalized'}
+- id: APINS
+  kind: output
+  products: [ANELLO EVK, ANELLO Ground INS]
+  rate: 100 Hz
+  ros_msg: ros/APINS.msg
+  description: Kalman-filter position, velocity and attitude solution.
+  fields:
+  - {index: 0, name: APINS, description: Sentence identifier}
+  - {index: 1, name: Time, units: ms, description: Time since power on}
+  - {index: 2, name: PPS Time, units: ns, description: 'Time of last PPS pulse in GPS time (since midnight, 6 Jan 1980)'}
+  - {index: 3, name: Status, description: '0 attitude only, 1 position and attitude, 2 position/attitude/heading, 3 RTK float, 4 RTK fix; 8/9/10 are the same states with the GPS button off in the Python tool'}
+  - {index: 4, name: Lat, units: deg, description: "Latitude ('+' north, '-' south)"}
+  - {index: 5, name: Long, units: deg, description: "Longitude ('+' east, '-' west)"}
+  - {index: 6, name: Height, units: m, description: Height above ellipsoid}
+  - {index: 7, name: VN, units: m/s, description: North velocity in NED frame}
+  - {index: 8, name: VE, units: m/s, description: East velocity in NED frame}
+  - {index: 9, name: VD, units: m/s, description: Down velocity in NED frame}
+  - {index: 10, name: Roll, units: deg, description: Roll angle, rotation about body-frame X}
+  - {index: 11, name: Pitch, units: deg, description: Pitch angle, rotation about body-frame Y}
+  - {index: 12, name: Heading, units: deg, description: Heading angle, rotation about body-frame Z}
+  - {index: 13, name: ZUPT, description: '0 moving, 1 stationary'}
+  note: >-
+    Roll, pitch and heading are standard aerospace Euler angles in a 3-2-1
+    (yaw, pitch, roll) body-frame rotation.
+- id: APAHRS
+  kind: output
+  products: [ANELLO Ground IMU with the ANELLO AHRS upgrade]
+  ros_msg: ros/APAHRS.msg
+  description: Roll, pitch and yaw from the AHRS upgrade.
+  fields:
+  - {index: 0, name: APAHRS, description: 'Sentence identifier (the manual table prints APINS here)'}
+  - {index: 1, name: Time, units: ms, description: Time since power on}
+  - {index: 2, name: Sync Time, units: ns, description: Time of the last sync pulse}
+  - {index: 3, name: Roll, units: deg, description: Roll}
+  - {index: 4, name: Pitch, units: deg, description: Pitch}
+  - {index: 5, name: Yaw, units: deg, description: Yaw}
+  - {index: 6, name: ZUPT Status, description: '1 if ZUPT enabled, 0 if disabled'}
+  note: >-
+    Yaw is an integrated relative heading, not an absolute heading, unless the
+    user supplies an absolute heading — after which the optical gyro integrates
+    relative to it.
+- id: APCOV
+  kind: output
+  products: [via ROS driver]
+  ros_msg: ros/APCOV.msg
+  description: >-
+    Solution covariance. Published by the ROS driver; not documented as an ASCII
+    sentence in the A-1 developer manual.
+- id: APHEALTH
+  kind: output
+  products: [via ROS driver]
+  ros_msg: ros/APHEALTH.msg
+  description: >-
+    Unit health. Published by the ROS driver; not documented as an ASCII sentence
+    in the A-1 developer manual.
+- id: APCFG
+  kind: input
+  description: Unit configuration read/write.
+  form: '#APCFG,<r|w|R|W>,<param>,<value>*<CS>'
+  parameters: conventions/anello-photonics-conventions.yml
+- id: APVEH
+  kind: input
+  description: Vehicle configuration read/write (lever arms, antenna baseline).
+  form: '#APVEH,<r|w|R|W>,<param>,<value>*<CS>'
+- id: APODO
+  kind: input
+  ros_msg: ros/APODO.msg
+  description: External odometer speed input.
+  form: "#APODO,<dir>,<speed>*<CS>  ('+' forward, '-' reverse)"
+- id: APPNG
+  kind: input
+  description: Ping / port test.
+- id: APECH
+  kind: input
+  description: Echo / checksum test.
+- id: APRST
+  kind: input
+  description: System reset.
+identity_queries:
+  note: >-
+    Referenced in the error table (code 10) as taking no additional fields.
+    Individual response formats are not published in the online manual.
+  commands: ['#APPID', '#APSTA', '#APVER', '#APSER', '#APFSN', '#APFHW']
+binary_projection:
+  envelope: RTCM STANDARD 10403
+  subtypes:
+  - {subtype: 1, message: IMU (EVK / Ground INS)}
+  - {subtype: 6, message: IM1 (Ground IMU)}
+  - {subtype: 2, message: GPS PVT}
+  - {subtype: 3, message: HDG}
+  - {subtype: 4, message: INS}
+  note: AHRS binary output is documented for the Ground IMU.
+csv_export:
+  tool: cli/anello-photonics-cli.yml
+  streams: [IMU, GPS, GP2, HDG, INS]

@@ -1,0 +1,63 @@
+generated: '2026-08-06'
+method: searched
+source: https://docs-a1.readthedocs.io/en/latest/python_tool.html
+name: ANELLO Python Program (user_tool)
+description: >-
+  ANELLO's first-party command-line/terminal-UI tool for connecting to, configuring,
+  logging and monitoring ANELLO units. It is not a package-manager binary — it is run
+  from a cloned repository as `python user_program.py`.
+repository: https://github.com/Anello-Photonics/user_tool
+docs: https://docs-a1.readthedocs.io/en/latest/python_tool.html
+troubleshooting: https://docs-a1.readthedocs.io/en/latest/setup_troubleshooting.html
+package: packages/anello-photonics-packages.yml
+install:
+- method: git+pip
+  requirements:
+  - Python 3.6 or later (repo README pins 3.9)
+  - a git client
+  steps:
+  - git clone https://github.com/Anello-Photonics/user_tool.git
+  - pip install -r requirements.txt
+  - python user_program.py
+entrypoints:
+- command: python user_program.py
+  description: Interactive configuration and logging tool (main menu).
+- command: python graph_demo.py
+  description: Graphing demo; documented as being folded into the user tool.
+commands:
+- group: Connect
+  description: Establish device communication.
+  options:
+  - name: COM
+    description: Serial connection — auto-detect or manual port configuration.
+  - name: UDP
+    description: Ethernet connection.
+- group: Unit Configuration
+  description: >-
+    View and edit unit-level settings. Maps to the #APCFG read/write message
+    surface documented in conventions/anello-photonics-conventions.yml.
+- group: Vehicle Configurations
+  description: >-
+    Configure lever arms and run antenna baseline calibration. Maps to #APVEH.
+- group: Log
+  description: Data collection.
+  options:
+  - name: Start logging
+  - name: Stop logging
+  - name: Export to CSV
+    description: >-
+      Writes separate CSV files for the IMU, GPS, GP2, HDG and INS message
+      streams.
+- group: Monitor
+  description: Real-time data display with toggleable LOG and GPS buttons.
+- group: NTRIP
+  description: >-
+    Start an NTRIP client against a standard NTRIP caster and forward the RTCM
+    3.3 MSM correction stream to the unit's data port for RTK.
+related_tools:
+- name: Firmware upgrade
+  docs: https://docs-a1.readthedocs.io/en/latest/fw_upgrade.html
+- name: Software tools
+  docs: https://docs-a1.readthedocs.io/en/latest/software_tools.html
+- name: ANELLO_INS_Scripts (Maritime INS, MAVLink)
+  url: https://github.com/Anello-Photonics/ANELLO_INS_Scripts

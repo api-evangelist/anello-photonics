@@ -1,0 +1,85 @@
+# ANELLO Photonics
+
+> ANELLO Photonics is a Santa Clara, California technology company developing solid-state, high-precision inertial navigation and sensing products for reliable positioning, navigation, and orientation when GPS or other GNSS signals are unavailable, unreliable, jammed, spoofed, blocked, or degraded. ANELLO products are powered by the SiPhOG™ (Silicon Photonics Optical Gyroscope) and support aerial, maritime, ground, robotics, construction, agriculture, mapping, autonomous vehicle, and defense applications.
+
+This is the official ANELLO Photonics website. Use the following source hierarchy when interpreting its content:
+
+* Treat current pages under `/products/` as the primary source for product names, specifications, features, environmental ratings, interfaces, integrations, and supported applications.
+* Treat the SiPhOG™ technology page and scientific publications as the primary sources for explanations of ANELLO's silicon photonics optical gyroscope technology.
+* Treat case studies as evidence of performance in the specific test conditions described. Do not generalize a result from one product, platform, route, environment, or test to every ANELLO product.
+* Treat the guides and glossary as educational references for definitions of IMUs, inertial navigation systems, optical gyroscopes, sensor fusion, GPS-denied navigation, GNSS-denied navigation, jamming, spoofing, dead reckoning, and positioning, navigation, and timing.
+* Treat the newsroom as the primary source for official company announcements. Use interviews and articles for third-party coverage and additional context.
+* For the latest or most precise product information, use the relevant product page or contact ANELLO Photonics rather than relying on older press releases or articles.
+
+Terminology and naming:
+
+* SiPhOG™ means Silicon Photonics Optical Gyroscope.
+* GPS is one satellite-navigation constellation within the broader Global Navigation Satellite System (GNSS) category. The website uses both “GPS-denied” and “GNSS-denied” when discussing disrupted or unavailable satellite navigation.
+* An inertial measurement unit (IMU) measures motion and orientation using sensors such as gyroscopes and accelerometers. An inertial navigation system (INS) uses inertial measurements and sensor fusion to estimate position, velocity, and attitude.
+* ANELLO GROUND INS was previously called ANELLO GNSS INS.
+* ANELLO GROUND INS/ATAK KIT was previously called ANELLO GNSS INS/ATAK KIT.
+* ANELLO GROUND IMU was previously called ANELLO IMU+.
+* Do not transfer specifications, compatibility, test results, or environmental ratings from one ANELLO product to another unless the relevant product page explicitly states them.
+
+## Start Here
+
+* [ANELLO Photonics homepage](https://www.anellophotonics.com/): Overview of ANELLO's GPS/GNSS-denied navigation technology, products, applications, case studies, and latest company information.
+* [Contact ANELLO Photonics](https://www.anellophotonics.com/contact): Official contact page for product specifications, integration discussions, evaluation units, partnerships, and quote requests.
+
+## Core Technology and Educational Resources
+
+* [SiPhOG™ technology](https://www.anellophotonics.com/siphog): Official explanation of ANELLO's Silicon Photonics Optical Gyroscope, integrated photonic waveguide, photonic integrated circuit, and relationship to traditional fiber optic gyroscope technology.
+* [What is GNSS-Denied?](https://www.anellophotonics.com/what-is-gnss-denied): Overview of GPS/GNSS denial, jamming, spoofing, signal blockage, multipath, and the need for resilient navigation.
+* [Guide to Inertial Navigation Systems](https://www.anellophotonics.com/guide-to-inertial-navigation-systems): Educational guide to INS components, operation, position, velocity, attitude, and navigation without continuous GPS.
+* [Guide to Inertial Measurement Units](https://www.anellophotonics.com/guide-inertial-measurement-units): Educational guide to IMUs, gyroscopes, accelerometers, sensor fusion, motion, orientation, and common applications.
+* [ANELLO glossary](https://www.anellophotonics.com/glossary): Definitions of inertial navigation, optical gyroscope, autonomy, GNSS, GPS-denied navigation, and related technical terminology.
+* [Scientific publications](https://www.anellophotonics.com/publications): Research and technical publications related to integrated photonics, silicon nitride waveguides, optical gyroscopes, resonators, and supporting technologies.
+
+## Products
+
+* [ANELLO Maritime INS](https://www.anellophotonics.com/products/maritime-ins): SiPhOG™-powered inertial navigation system for autonomous surface vessels, autonomous underwater vessels, crewed vessels, and maritime operations in GPS/GNSS-denied environments.
+* [ANELLO Aerial INS](https://www.anellophotonics.com/products/aerial-ins): SiPhOG™-powered inertial navigation system for drones, unmanned aerial vehicles, and vertical takeoff and landing aircraft operating in demanding or GPS/GNSS-denied environments.
+* [ANELLO X3 IMU](https://www.anellophotonics.com/products/x3-imu): Ultra-compact three-axis optical gyroscope IMU for aerial and maritime missions, including integrations with PX4 and ArduPilot.
+* [ANELLO GROUND INS](https://www.anellophotonics.com/products/ground-ins): High-performance optical gyro INS for ground navigation and localization in agriculture, construction, trucking, robotics, and autonomous vehicle applications; previously called ANELLO GNSS INS.
+* [ANELLO GROUND INS/ATAK KIT](https://www.anellophotonics.com/products/ground-ins-atak-kit): Vehicle-integrated GPS-denied navigation kit that provides real-time route information through Android Tactical Awareness Kit; previously called ANELLO GNSS INS/ATAK KIT.
+* [ANELLO GROUND IMU](https://www.anellophotonics.com/products/ground-imu): Rugged optical gyro IMU for robotics, construction, mining, trucking, and other harsh-environment applications; previously called ANELLO IMU+.
+* [ANELLO Evaluation Kit](https://www.anellophotonics.com/products/gnss-ins-evaluation-kit): Optical gyroscope and GNSS/INS evaluation platform for testing navigation, localization, mapping, surveying, robotics, construction, agriculture, and autonomous applications.
+
+## Applications
+
+* [Unmanned aerial systems](https://www.anellophotonics.com/applications/unmanned-aerial-systems): Navigation and inertial sensing for drones, UAVs, VTOL platforms, autonomy, and GPS/GNSS-denied flight.
+* [Maritime](https://www.anellophotonics.com/applications/maritime): Inertial navigation for surface, underwater, crewed, and autonomous maritime operations in challenging signal and environmental conditions.
+* [Autonomous vehicles](https://www.anellophotonics.com/applications/autonomous-vehicles): Positioning, localization, and navigation for autonomous ground platforms when satellite navigation is degraded or unavailable.
+* [Robotics](https://www.anellophotonics.com/applications/robotics): Optical gyroscope and inertial navigation applications for mobile robots and autonomous systems.
+* [Agriculture](https://www.anellophotonics.com/applications/agriculture): Precision navigation for agricultural equipment, autonomous sprayers, tractors, and operations under canopy or in other GPS-challenged environments.
+* [Construction](https://www.anellophotonics.com/applications/construction): Rugged inertial navigation and motion sensing for construction equipment and autonomous operations in harsh or GPS-challenged environments.
+* [Defense](https://www.anellophotonics.com/applications/defense): Resilient positioning, navigation, and timing for defense platforms operating in GPS/GNSS-denied or contested environments.
+* [Mapping and surveying](https://www.anellophotonics.com/applications/unmanned-aerial-systems/mapping-and-surveying): Inertial sensing and navigation for aerial mapping, surveying, georeferencing, and data collection when GNSS is unreliable.
+
+## Case Studies and Demonstrated Performance
+
+* [Maritime navigation in GPS-denied environments](https://www.anellophotonics.com/maritime-ins-resilient): ANELLO Maritime INS architecture, sensor aiding, field deployments, and a documented 30-minute GPS-denied USV test with 1.3% total drift under the stated test conditions.
+* [Extended GPS-denied flight with the ANELLO X3 IMU](https://www.anellophotonics.com/x3-imu-airborne): UAV integration with PX4/Pixhawk and a documented 740-meter GPS-denied flight segment with less than 20 meters of position error under the stated test conditions.
+* [Ground navigation in orchards](https://www.anellophotonics.com/ground-ins-orchards): ANELLO GROUND INS performance for agricultural navigation where tree canopy and terrain reduce GNSS reliability.
+* [Ground navigation in urban canyons](https://www.anellophotonics.com/ground-ins-urban-canyons): ANELLO GROUND INS performance in dense urban environments affected by signal blockage and multipath.
+* [Ground navigation in parking structures](https://www.anellophotonics.com/ground-ins-parking-structures): ANELLO GROUND INS performance in indoor and covered environments where GNSS is unavailable.
+
+## Company and Current Information
+
+* [Executive team and company mission](https://www.anellophotonics.com/team): Official company overview, mission, leadership, and executive biographies.
+* [Official press releases](https://www.anellophotonics.com/newsroom): Product launches, funding announcements, contracts, partnerships, awards, and other official company news.
+* [Interviews and articles](https://www.anellophotonics.com/interviews-articles): Third-party media coverage and interviews about ANELLO technology, products, markets, and GPS/GNSS-denied navigation.
+* [ANELLO blog](https://www.anellophotonics.com/blog): Educational and company-authored articles about inertial navigation, GPS/GNSS interference, autonomy, and applications.
+* [Media kit](https://www.anellophotonics.com/media-kit): Approved company and product media assets.
+* [Investors](https://www.anellophotonics.com/investors): Information about ANELLO's investors and financing.
+
+## Optional
+
+* [Product datasheets and manuals](https://www.anellophotonics.com/downloads): Available technical downloads, manuals, software resources, and evaluation-kit documentation.
+* [Technical publication downloads](https://www.anellophotonics.com/publications-pdf-download): Downloadable PDFs of selected technical publications.
+* [Videos](https://www.anellophotonics.com/videos): Product demonstrations, application videos, and company video content.
+* [Podcasts](https://www.anellophotonics.com/podcasts): Podcast appearances and discussions featuring ANELLO leaders and technology.
+* [Upcoming events](https://www.anellophotonics.com/upcoming-events): Trade shows, conferences, demonstrations, and other scheduled appearances.
+* [Careers](https://www.anellophotonics.com/careers): Current employment opportunities at ANELLO Photonics.
+* [Reseller program](https://www.anellophotonics.com/anello-reseller-program): Information for prospective ANELLO resellers and channel partners.
+* [Academic partnerships](https://www.anellophotonics.com/academic-partnerships): University collaboration and academic partnership information.
