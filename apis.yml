@@ -14,7 +14,7 @@ description: 'ANELLO Photonics is a Santa Clara, California company building sol
 url: https://raw.githubusercontent.com/api-evangelist/anello-photonics/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-specificationVersion: '0.20'
+specificationVersion: '0.23'
 created: '2026-08-06'
 modified: '2026-08-06'
 image: https://static1.squarespace.com/static/60404157b68a5453a865f98e/t/6a2742eefb5f0723d0178a9c/1624159401076/social.png?format=1500w
