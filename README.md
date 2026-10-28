@@ -64,5 +64,90 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-ANELLO Photonics is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://www.nasdaqprivatemarket.com/
+ANELLO Photonics is a Santa Clara, California company building solid-state, high-precision inertial navigation and sensing products for positioning, navigation and orientation when GNSS is jammed, spoofed, blocked or otherwise unavailable. Its products are powered by SiPhOG (Silicon Photonics Optical Gyroscope), a chip-scale optical gyroscope built on standard semiconductor processes. The developer surface is an embedded one rather than a web API: ANELLO Ground INS, Ground IMU, Maritime INS, Aerial INS, X3 IMU and the Evaluation Kit expose a documented ASCII and RTCM-binary message protocol over RS-232 serial, USB-C and UDP/Ethernet, with a public developer manual, a first-party Python configuration and logging tool, a ROS/ROS2 driver that publishes machine-readable .msg/.srv interface definitions, and PX4/ArduPilot and MAVLink integrations.
+
+**Areas:** Company · Inertial Navigation · Optical Gyroscope · Silicon Photonics · GNSS · GPS-Denied Navigation · Sensors · Robotics · Defense · Autonomous Vehicles · Embedded Systems · IMU
+
+## ANELLO Photonics on APIs.io
+
+Everything profiled for ANELLO Photonics is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/anello-photonics/](https://apis.io/providers/anello-photonics/)** — or go straight to one of the APIs or properties below.
+
+### APIs (1)
+
+- [ANELLO Device Messaging Protocol](https://apis.io/apis/anello-photonics/anello-device-messaging-protocol/) — The ANELLO device interface: an ASCII sentence protocol (#APIMU, #APIM1, #APGPS, #APHDG, #APINS, #APAHRS output; #APCFG, #APVEH, #APODO, #APPNG, #APECH,…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### Security (1)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Anello Photonics Domain Security](https://apis.io/security/anello-photonics/anello-photonics-domain-security/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.anellophotonics.com/)
+- [Documentation](https://docs-a1.readthedocs.io/en/latest/)
+- [Getting started](https://docs-a1.readthedocs.io/en/latest/getting_started_quick.html)
+- [API reference](https://docs-a1.readthedocs.io/en/latest/communication_messaging.html)
+- [Support](https://www.anellophotonics.com/contact)
+- [Blog](https://www.anellophotonics.com/blog)
+- [Privacy policy](https://www.anellophotonics.com/privacy-policy)
+- [GitHub](https://github.com/Anello-Photonics)
+
+## API Evangelist rating
+
+**Kin Score 24.9** — emerging · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 64.3 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 18.4 |
+| Developer ergonomics | 59.5 |
+| Access clarity | 10.5 |
+
+**Agent readiness 2.9** — human-only
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | — |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 14.7** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/anello-photonics/](https://apis.io/providers/anello-photonics/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for ANELLO Photonics: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/anello-photonics/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
